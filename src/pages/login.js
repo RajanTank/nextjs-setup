@@ -9,7 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../schema/login';
 import { setUserToken } from '../actions/login';
 import Cookies from "universal-cookie";
-import Cookies from "cookies";
+import { useRouter } from 'next/router';
+import authenticatedRoute from '../components/common/authorization';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const Login = () => {
   });
   const { isLoading, errorMessage } = state;
   const dispatch = useDispatch();
-
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -42,16 +43,19 @@ const Login = () => {
         dispatch(setUserToken(data))
           .then((res) => {
             const cookies = new Cookies();
-            cookies.set("token", `${res.data.access_token}`, {
+            cookies.set("token", `${res}`, {
               path: "/",
             });
             setState((state) => ({
               ...state,
               isLoading: false,
-              errorMessage: res.data.error_message || '',
+              // errorMessage: res.data.error_message || '',
             }));
+            router.push('/dashboard')
           })
-          .catch(() => setState((state) => ({ ...state, isLoading: false })));
+          .catch((e) => {
+            setState((state) => ({ ...state, isLoading: false }))
+          });
       },
     );
   };
@@ -102,18 +106,18 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default authenticatedRoute(Login, {});
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (token) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/dashboard",
-      },
-    };
-  }
-  return { props: {} };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (token) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: "/dashboard",
+//       },
+//     };
+//   }
+//   return { props: {} };
+// };

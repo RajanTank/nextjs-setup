@@ -7,12 +7,11 @@ const UserLayout = (props) => {
     <>
       <Sidebar {...rest} />
       <Header {...rest} />
-      <main> {component}
-        {/* <Component {...rest} /> */}
+      <main>
+        {component}
       </main>
       {loaderCount > 0 && <FullScreenLoader />}
       <Footer />
-      Hello
     </>
   );
 };

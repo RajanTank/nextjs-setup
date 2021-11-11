@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../schema/addNewUser';
 import { addNewUser } from '../apis/manageUsers';
 import Cookies from "cookies";
+import authenticatedRoute from '../components/common/authorization';
 
 const AddNewUser = () => {
   const { t } = useTranslation();
@@ -143,18 +144,18 @@ const AddNewUser = () => {
   );
 };
 
-export default AddNewUser;
+export default authenticatedRoute(AddNewUser, { pathAfterFailure: '/login' });
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (token) {
-    return { props: {} };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/login",
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (token) {
+//     return { props: {} };
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/login",
+//     },
+//   };
+// };

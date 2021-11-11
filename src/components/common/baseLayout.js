@@ -32,23 +32,23 @@ const BaseLayout = ({
   const resetLoaderCount = () => dispatch(setReduxLoaderCount(0))
 
   const router = useRouter();
-  let isAuthenticated = !token;
+  let isAuthenticated = token;
   let isAdmin = true
   // profile && profile.is_admin;
   const routeInfo = getRouteInfo(router.pathname);
-  useEffect(() => {
-    loaderCount > 0 && resetLoaderCount(0);
-    if (router.pathname === "/" || router.pathname === "/_error") {
-      router.replace(isAuthenticated ? "dashboard" : "login");
-    } else if (router.pathname === "/login") {
-      isAuthenticated && router.replace("dashboard");
-    } else if (routeInfo.shouldBeAdmin) {
-      !isAdmin && router.replace(isAuthenticated ? "dashboard" : "login");
-    } else if (routeInfo.shouldBeAuthenticated) {
-      !isAuthenticated &&
-        router.replace(isAuthenticated ? "dashboard" : "login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   loaderCount > 0 && resetLoaderCount(0);
+  //   if (router.pathname === "/" || router.pathname === "/_error") {
+  //     router.replace(isAuthenticated ? "dashboard" : "login");
+  //   } else if (router.pathname === "/login") {
+  //     isAuthenticated && router.replace("dashboard");
+  //   } else if (routeInfo.shouldBeAdmin) {
+  //     !isAdmin && router.replace(isAuthenticated ? "dashboard" : "login");
+  //   } else if (routeInfo.shouldBeAuthenticated) {
+  //     !isAuthenticated &&
+  //       router.replace(isAuthenticated ? "dashboard" : "login");
+  //   }
+  // }, []);
   return (
     <ScrollToTop>
       <Head>

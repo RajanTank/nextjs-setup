@@ -5,17 +5,24 @@ const SET_USER_TOKEN = 'SET_USER_TOKEN';
 const LOGOUT = 'LOGOUT';
 
 const setUserToken = (body) => (dispatch) => {
-  return login(body).then((res) => {
-    if (res.data.status === true) {
-      let token = 'Bearer ' + res.data.data.access_token;
-      saveToken(token);
-      dispatch({
-        type: SET_USER_TOKEN,
-        payload: token,
-      });
-    }
-    return res;
+  // return login(body).then((res) => {
+  //   if (res.data.status === true) {
+  //     let token = 'Bearer ' + res.data.data.access_token;
+  //     saveToken(token);
+  //     dispatch({
+  //       type: SET_USER_TOKEN,
+  //       payload: token,
+  //     });
+  //   }
+  //   return res;
+  // });
+  let token = "kjsdnkjbvjhs"
+  saveToken(token)
+  dispatch({
+    type: SET_USER_TOKEN,
+    payload: token,
   });
+  return Promise.resolve(token)
 };
 
 const logout = () => {

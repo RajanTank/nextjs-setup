@@ -55,6 +55,17 @@ const enTranslation = {
       editUser: 'Save Details',
     },
   },
+  userList: {
+    title: "User List",
+    headers: [
+      { label: 'No.' },
+      { label: 'First Name' },
+      { label: 'Last Name' },
+      { label: 'Email' },
+      { label: 'Role' },
+      { label: 'Edit' },
+    ],
+  },
   profile: {
     title: 'Edit Profile',
     firstNamePlaceholder: 'First Name',

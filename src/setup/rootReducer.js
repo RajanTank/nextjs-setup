@@ -26,10 +26,11 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   let newState = state;
   if (
-    action.type === LOGOUT ||
-    (action.type !== SET_USER_TOKEN
-      // && !localStorage.getItem('TOKEN')
-    )
+    action.type === LOGOUT
+    // ||
+    // (action.type !== SET_USER_TOKEN
+    //   // && !localStorage.getItem('TOKEN')
+    // )
   ) {
     newState = initialState;
     removeToken();

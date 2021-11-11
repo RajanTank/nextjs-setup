@@ -8,6 +8,8 @@ import { decrementLoaderCount, incrementLoaderCount } from '../actions/loader';
 import { getUserList } from '../apis/manageUsers';
 import { useRouter } from 'next/router';
 import Cookies from "cookies";
+import { userData } from '../utility/methods/others';
+import authenticatedRoute from '../components/common/authorization';
 
 const ManageUsers = () => {
   const history = useRouter()
@@ -28,7 +30,7 @@ const ManageUsers = () => {
     page: 1,
     isButtonLoading: false,
     users: {
-      items: [],
+      items: userData,
       totalItemCount: 0,
       totalPages: 0,
     },
@@ -86,10 +88,13 @@ const ManageUsers = () => {
     );
   };
   const onEditUser = (user) => {
-    history.push(`/edit-user/${user.id}`, user);
+    history.push({
+      pathname: `/editUser`,
+      query: { id: user.id }
+    });
   };
   const onAddUser = () => {
-    history.push('/add-new-user');
+    history.push('/addNewUser');
   };
   const { items, totalItemCount, totalPages } = users;
 
@@ -133,9 +138,9 @@ const ManageUsers = () => {
             totalItemsCount={totalItemCount}
             headers={t('manageUsers.headers', { returnObjects: true })}
             onPageChange={onPageChange}>
-            {items &&
-              items.length > 0 &&
-              items.map((item, index) => {
+            {userData &&
+              userData.length > 0 &&
+              userData.map((item, index) => {
                 return (
                   <tr>
                     <td>{(page - 1) * 10 + index + 1}</td>
@@ -171,18 +176,18 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default authenticatedRoute(ManageUsers, { pathAfterFailure: '/login' });
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (token) {
-    return { props: {} };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/login",
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (token) {
+//     return { props: {} };
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/login",
+//     },
+//   };
+// };

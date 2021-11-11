@@ -9,12 +9,12 @@ import schema from '../schema/editUser';
 import { editUser } from '../apis/manageUsers';
 import { useRouter } from 'next/router';
 import Cookies from "cookies";
+import authenticatedRoute from '../components/common/authorization';
 
 const EditUser = () => {
   const { t } = useTranslation();
   const history = useRouter()
   const [isLoading, setLoading] = useStateCallback(false);
-
   const { first_name, last_name, email, id, is_admin } =
     history?.location?.state || {};
 
@@ -117,19 +117,19 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default authenticatedRoute(EditUser, { pathAfterFailure: '/login' });
 
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (token) {
-    return { props: {} };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/login",
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (token) {
+//     return { props: {} };
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/login",
+//     },
+//   };
+// };

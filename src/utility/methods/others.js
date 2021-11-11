@@ -51,11 +51,11 @@ const getHeaderTitle = (path) => {
     return 'Manage Profile';
   } else if (/dashboard/.test(path)) {
     return 'Dashboard';
-  } else if (/add-new-user/.test(path)) {
+  } else if (/addNewUser/.test(path)) {
     return 'Add User';
-  } else if (/edit-user/.test(path)) {
+  } else if (/editUser/.test(path)) {
     return 'Edit User';
-  } else if (/manage-users/.test(path)) {
+  } else if (/manageUsers/.test(path)) {
     return 'Manage Users';
   }
   return 'Yet to be set';
@@ -149,6 +149,46 @@ const getRouteInfo = (path) => {
   };
 };
 
+const userData = [
+  {
+    first_name: "John",
+    last_name: 'Doe',
+    email: 'johnDoe@gmail.com'
+  },
+  {
+    first_name: '1John',
+    last_name: '1Doe',
+    email: '1johnDoe@gmail.com'
+  },
+  {
+    first_name: 'Abhijit',
+    last_name: 'Patel',
+    email: 'abhijitPatel@gmail.com',
+  },
+  {
+    first_name: 'Samir Vimal',
+    last_name: 'Gupta',
+    email: 'samirvimalgupta@gmail.com'
+  },
+  {
+    first_name: '1John',
+    last_name: '1Doe',
+    email: '1johnDoe@gmail.com'
+  },
+  {
+    first_name: 'Abhijit',
+    last_name: 'Patel',
+    email: 'abhijitPatel@gmail.com',
+  },
+  {
+    first_name: 'Samir Vimal',
+    last_name: 'Gupta',
+    email: 'samirvimalgupta@gmail.com',
+    is_admin: true,
+    id: 2,
+  }
+]
+
 export {
   showToast,
   getFileNameFromURL,
@@ -157,5 +197,6 @@ export {
   getHeaderTitle,
   getSidebarMenuClasses,
   getBaseURL,
-  getRouteInfo
+  getRouteInfo,
+  userData
 };

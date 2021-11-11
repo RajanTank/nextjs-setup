@@ -21,6 +21,7 @@ import { Container, Row, Card, Tabs, Tab, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import Cookies from "cookies";
+import authenticatedRoute from '../components/common/authorization';
 
 
 const Dashboard = () => {
@@ -521,35 +522,35 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default authenticatedRoute(Dashboard, { pathAfterFailure: '/login' });
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (true) {
-    let dashboardDetails = {
-      entities: 0,
-      urls: 0,
-      datapoints: 0,
-      newEntities: 0,
-    };
-    // let res = await getDashBoardDetails("", {
-    //   Authorization: "Bearer " + token,
-    // });
-    // if (res.data.status) {
-    //   dashboardDetails = {
-    //     entities: res.data.data ? res.data.data.entities : 0,
-    //     urls: res.data.data ? res.data.data.urls : 0,
-    //     datapoints: res.data.data ? res.data.data.datapoints : 0,
-    //     newEntities: res.data.data ? res.data.data.new_entities : 0,
-    //   };
-    // }
-    return { props: { dashboardDetails } };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/login",
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (token) {
+//     let dashboardDetails = {
+//       entities: 0,
+//       urls: 0,
+//       datapoints: 0,
+//       newEntities: 0,
+//     };
+//     // let res = await getDashBoardDetails("", {
+//     //   Authorization: "Bearer " + token,
+//     // });
+//     // if (res.data.status) {
+//     //   dashboardDetails = {
+//     //     entities: res.data.data ? res.data.data.entities : 0,
+//     //     urls: res.data.data ? res.data.data.urls : 0,
+//     //     datapoints: res.data.data ? res.data.data.datapoints : 0,
+//     //     newEntities: res.data.data ? res.data.data.new_entities : 0,
+//     //   };
+//     // }
+//     return { props: { dashboardDetails } };
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/login",
+//     },
+//   };
+// };

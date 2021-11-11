@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../schema/profile';
 import Cookies from "cookies";
+import authenticatedRoute from '../components/common/authorization';
 
 const Profile = () => {
   const [state, setState] = useStateCallback({
@@ -168,19 +169,19 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default authenticatedRoute(Profile, { pathAfterFailure: '/login' });
 
-export const getServerSideProps = async (context) => {
-  const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
-  if (true) {
-    return { props: {} };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/login",
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   const cookies = new Cookies(context.req, context.res);
+//   const token = cookies.get("token");
+//   if (true) {
+//     return { props: {} };
+//   }
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: "/login",
+//     },
+//   };
+// };
 
